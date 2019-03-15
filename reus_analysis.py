@@ -170,12 +170,15 @@ class REUS_Analysis:
         file.close()
 
 
-    def errors(self, nblocks=5):
+    def errors(self, rs=0, re=1, nblocks=5):
         shutil.rmtree('errors', ignore_errors=True)
         os.makedirs('errors')
 
         for each in self.data:
-            colvar = each["colvar"]
+            col_len  = len(each["colvar"])
+            rscolvar = int(col_len * rs)
+            recolvar = int(col_len * re)
+            colvar = each["colvar"][rscolvar:recolvar]
 
             for n in range(nblocks):
                 start = n/nblocks
